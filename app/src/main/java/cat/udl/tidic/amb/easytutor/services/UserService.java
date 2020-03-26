@@ -1,4 +1,4 @@
-package cat.udl.tidic.amb.easytutor;
+package cat.udl.tidic.amb.easytutor.services;
 
 
 

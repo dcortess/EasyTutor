@@ -1,4 +1,4 @@
-package cat.udl.tidic.amb.easytutor;
+package cat.udl.tidic.amb.easytutor.network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

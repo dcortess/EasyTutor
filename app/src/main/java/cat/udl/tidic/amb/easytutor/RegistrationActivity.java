@@ -11,11 +11,12 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.Objects;
 
+import cat.udl.tidic.amb.easytutor.network.RetrofitClientInstance;
+import cat.udl.tidic.amb.easytutor.services.UserService;
+import cat.udl.tidic.amb.easytutor.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
