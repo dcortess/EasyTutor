@@ -6,9 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import cat.udl.tidic.amb.easytutor.viewmodel.UserViewModel;
+
 public class MainActivity extends AppCompatActivity {
+
+    UserViewModel userViewModel;
+    Button login;
+    EditText user;
+    EditText pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +24,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView register = findViewById(R.id.textView_register);
+
+        login= findViewById(R.id.button_login);
+        user= findViewById(R.id.editText_user);
+        pass= findViewById(R.id.editText_pass);
+
+        userViewModel = new UserViewModel(getApplication());
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String _username= user.getText().toString();
+                String _password= user.getText().toString();
+                userViewModel.createTokenUser(_username,_password);
+
+            }
+        });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
