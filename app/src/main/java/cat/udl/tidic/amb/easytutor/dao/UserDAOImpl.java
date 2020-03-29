@@ -1,7 +1,12 @@
 package cat.udl.tidic.amb.easytutor.dao;
 
 import android.util.Log;
+import android.widget.Toast;
 
+import java.io.IOException;
+import java.util.Objects;
+
+import cat.udl.tidic.amb.easytutor.RegistrationActivity;
 import cat.udl.tidic.amb.easytutor.network.RetrofitClientInstance;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,10 +24,16 @@ public class UserDAOImpl implements IUserDAO {
             //trec les respostes pel log ja que vaig tenir problemes a l'hora d'agafar el context actual per fer servir un Toast
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.d("UserDAO", "RESPONSE OK");
-                Log.d("UserDAO", "" + response.code());
+                if (response.code() == 200) {
+                    Log.d("UserDAO", "login!");
+                } else {
+                    try {
+                        Log.d("UserDAO", response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
