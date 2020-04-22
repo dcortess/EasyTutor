@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">EasyTutor</string>
+    <string name="email">E-mail</string>
+    <string name="nombreDeUsuario">Nombre De Usuario</string>
+    <string name="perfilDeUsuario">Perfil De Usuario</string>
+    <string name="Nombre">Nombre</string>
+    <string name="genero">Género</string>
+    <string name="telefono">Teléfono</string>
 </resources>
