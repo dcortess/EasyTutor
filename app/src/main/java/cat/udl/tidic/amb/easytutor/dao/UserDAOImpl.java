@@ -1,5 +1,6 @@
 package cat.udl.tidic.amb.easytutor.dao;
 
+import cat.udl.tidic.amb.easytutor.models.User;
 import cat.udl.tidic.amb.easytutor.network.RetrofitClientInstance;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -17,7 +18,7 @@ public class UserDAOImpl implements IUserDAO {
     }
 
     @Override
-    public Call<ResponseBody> getProfileUser(String auth){
+    public Call<User> getProfileUser(String auth){
 
         return retrofit.create(IUserDAO.class).getProfileUser(auth);
 

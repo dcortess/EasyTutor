@@ -12,6 +12,7 @@ import java.io.IOException;
 import cat.udl.tidic.amb.easytutor.dao.IUserDAO;
 import cat.udl.tidic.amb.easytutor.dao.UserDAOImpl;
 import cat.udl.tidic.amb.easytutor.models.User;
+import cat.udl.tidic.amb.easytutor.preferences.PreferencesProvider;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,6 +21,8 @@ import retrofit2.Response;
 public class UserServiceImpl implements UserServiceI {
 
     private IUserDAO userDAO;
+    private String TAG = "UserServiceImpl";
+
     public final MutableLiveData<String> token;
     public final MutableLiveData<User> user;
     public UserServiceImpl() {
@@ -42,8 +45,10 @@ public class UserServiceImpl implements UserServiceI {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.code() == 200 ){
                     try {
-                        String authToken = response.body().string();
-
+                        String authToken = response.body().string().split(":")[1];
+                        authToken = authToken.substring(2,authToken.length() -2);
+                        Log.d(TAG, "Rebut el token: " + authToken);
+                        PreferencesProvider.providePreferences().edit().putString("token",authToken).apply();
                         token.setValue(authToken);
 
                     } catch (IOException e) {
@@ -72,32 +77,16 @@ public class UserServiceImpl implements UserServiceI {
     @Override
     public void getProfileUser(final String Auth){
 
-        userDAO.getProfileUser(Auth).enqueue(new Callback<ResponseBody>() {
+        userDAO.getProfileUser(Auth).enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if (response.code() == 200 ){
-                    try {
-
-                        String respuestaBody = response.body().string();
-                        JSONObject mUserjson = new JSONObject(respuestaBody);
-
-                        User u = new User();
-
-                        u.setUsername(mUserjson.getString("username"));
-                        u.setName(mUserjson.getString("name"));
-                        u.setSurname(mUserjson.getString("surname"));
-                        u.setPhone(mUserjson.getString("phone"));
-                        u.setGender(mUserjson.getString("gender"));
-                        u.setEmail(mUserjson.getString("email"));
+                    User u = response.body();
+                    Log.d(TAG, "Rebut el user: " + u.toString());
 
 
-                        Log.d("getUser", u.getUsername());
+                    user.setValue(u);
 
-                        user.setValue(u);
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
                 }
                 else{
                     user.setValue(new User());
@@ -105,7 +94,7 @@ public class UserServiceImpl implements UserServiceI {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Log.d("getUser", t.getMessage());
                 user.setValue(new User());
             }

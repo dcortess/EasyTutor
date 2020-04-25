@@ -1,5 +1,6 @@
 package cat.udl.tidic.amb.easytutor.dao;
 
+import cat.udl.tidic.amb.easytutor.models.User;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -11,6 +12,11 @@ public interface IUserDAO {
     @POST("account/create_token")
     Call<ResponseBody> createTokenUser(@Header("Authorization") String auth);
 
+    /*
+     * @Jordi: Molt més simple utilitzar la classe User, així no cal treballar amb json
+     * evitem problemes i programem menys. La llibreria GSON de retrofit us fa la feina
+     * model està serialitzat.
+     * */
     @GET("account/profile")
-    Call<ResponseBody> getProfileUser(@Header("Authorization") String auth);
+    Call<User> getProfileUser(@Header("Authorization") String auth);
 }
