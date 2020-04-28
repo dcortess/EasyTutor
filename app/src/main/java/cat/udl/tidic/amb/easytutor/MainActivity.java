@@ -1,6 +1,7 @@
 package cat.udl.tidic.amb.easytutor;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -58,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent (v.getContext(), RegistrationActivity.class);
                 startActivityForResult(intent, 0);
+            }
+        });
+
+        /*
+         * @Jordi: S'ha d'observar, si no, el MVVM no té sentit, ningú notifica a la UI.
+         * */
+        userViewModel.getResponseLiveDataToken().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                // TODO: Assegurar que s conté un token i no un missatge d'error.
+                Intent intent = new Intent (MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -2,6 +2,7 @@ package cat.udl.tidic.amb.easytutor;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,31 +20,37 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView email;
     private TextView phone;
     private TextView gender;
-
+    private String TAG ="ProfileActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_profile);
 
         this.mPreferences = PreferencesProvider.providePreferences();
         userViewModel = new UserViewModel(getApplication());
 
-        name = findViewById(R.id.editText_nombre);
-        username = findViewById(R.id.editText_username);
-        email = findViewById(R.id.editText_email);
-        phone = findViewById(R.id.editText_telefono);
-        gender = findViewById(R.id.editText_genero);
+        name = findViewById(R.id.textView20);
+        username = findViewById(R.id.textView21);
+        email = findViewById(R.id.textView22);
+        phone = findViewById(R.id.textView24);
+        gender = findViewById(R.id.textView23);
+
+        //Falta fer la petició
+        userViewModel.getProfileUser();
 
         userViewModel.getResponseLiveDataUser().observe(this, new Observer<User>() {
             @Override
             public void onChanged(User u) {
-                String completeName = u.getUsername() + " " + u.getSurname();
+                Log.d(TAG, "Usuari: " + u.toString());
+
+                String completeName = u.getName() + " " + u.getSurname();
                 name.setText(completeName);
-                username.setText(u.getSurname());
+                username.setText(u.getUsername());
                 email.setText(u.getEmail());
                 phone.setText(u.getPhone());
                 gender.setText(u.getGender());
+
             }
         });
     }

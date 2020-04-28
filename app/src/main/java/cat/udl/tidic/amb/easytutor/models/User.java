@@ -3,21 +3,21 @@ package cat.udl.tidic.amb.easytutor.models;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
-    @SerializedName("nombre")
+    @SerializedName("name")
     private String name;
-    @SerializedName("apellido")
+    @SerializedName("surname")
     private String surname;
-    @SerializedName("usuario")
+    @SerializedName("username")
     private String username;
     @SerializedName("email")
     private String email;
-    @SerializedName("genero")
+    @SerializedName("genere")
     private String gender;
-    @SerializedName("telefono")
+    @SerializedName("phone")
     private String phone;
-    @SerializedName("foto")
+    @SerializedName("photo")
     private String photo;
-    @SerializedName("zona")
+    @SerializedName("zone")
     private String zone;
 
     public User() {
@@ -107,5 +107,11 @@ public class User {
 
     public void setZone(String zone) {
         this.zone = zone;
+    }
+
+    @Override
+    public String toString(){
+
+        return ""+this.name+" "+this.surname+" "+this.email+" "+this.phone+" "+this.gender;
     }
 }
