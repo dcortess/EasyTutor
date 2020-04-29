@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
@@ -28,9 +29,10 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText edt_usuario;
     EditText edt_email;
     EditText edt_password;
-    EditText edt_genero;
     EditText edt_telefono;
     Button registrarse;
+    RadioButton hombre;
+    RadioButton mujer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,8 @@ public class RegistrationActivity extends AppCompatActivity {
         edt_usuario = findViewById(R.id.editText_username);
         edt_email = findViewById(R.id.editText_email);
         edt_password = findViewById(R.id.editText_pass);
-        edt_genero = findViewById(R.id.editText_genero);
+        hombre = findViewById(R.id.radioButton_hombre);
+        mujer = findViewById(R.id.radioButton_mujer);
         edt_telefono = findViewById(R.id.editText_telefono);
         registrarse = findViewById(R.id.button_registrarse);
 
@@ -54,14 +57,25 @@ public class RegistrationActivity extends AppCompatActivity {
                 String usuario = edt_usuario.getText().toString();
                 String email = edt_email.getText().toString();
                 String password = edt_password.getText().toString();
-                String genero = edt_genero.getText().toString();
+                String genero = "";
                 String telefono = edt_telefono.getText().toString();
+
+                if (hombre.isChecked()){
+                    genero = "M";
+                } else if (mujer.isChecked()){
+                    genero = "F";
+                }
+
 
                 if (LoginUtils.isValidEmailAddress(email)) {
 
                     if (LoginUtils.isValidPassword(password)) {
 
                         if (LoginUtils.isValidPhone(telefono)) {
+
+                            if (genero.equals("")){
+                                Toast.makeText(RegistrationActivity.this, "ERROR: Por favor indica un genero", Toast.LENGTH_SHORT).show();
+                            }
 
                             if (!nombre.equals("") && !apellido.equals("") && !usuario.equals("") && !email.equals("") && !password.equals("") && !genero.equals("") && !telefono.equals("")) {
                                 UserService userService;
