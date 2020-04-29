@@ -40,6 +40,21 @@ public class LoginUtils {
         return matcher.matches();
     }
 
+    public static boolean isValidPhone(String phone) {
+        boolean check=false;
+        if(!Pattern.matches("[a-zA-Z]+", phone)) {
+            if(phone.length() < 6 || phone.length() > 13) {
+                check = false;
+
+            } else {
+                check = true;
+            }
+        } else {
+            check=false;
+        }
+        return check;
+    }
+
     //TODO: isValidGmailAddress(String email)
     //TODO: Make this methods static
     //TODO: getUserName as the part before @, make the test.

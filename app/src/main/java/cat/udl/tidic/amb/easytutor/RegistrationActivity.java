@@ -61,44 +61,49 @@ public class RegistrationActivity extends AppCompatActivity {
 
                     if (LoginUtils.isValidPassword(password)) {
 
-                        if (!nombre.equals("") && !apellido.equals("") && !usuario.equals("") && !email.equals("") && !password.equals("") && !genero.equals("") && !telefono.equals("")) {
-                            UserService userService;
-                            userService = RetrofitClientInstance.
-                                    getRetrofitInstance().create(UserService.class);
+                        if (LoginUtils.isValidPhone(telefono)) {
 
-                            String encode_hash = Utils.encode(password, "16", 29000);
+                            if (!nombre.equals("") && !apellido.equals("") && !usuario.equals("") && !email.equals("") && !password.equals("") && !genero.equals("") && !telefono.equals("")) {
+                                UserService userService;
+                                userService = RetrofitClientInstance.
+                                        getRetrofitInstance().create(UserService.class);
 
-                            JsonObject user_json = new JsonObject();
-                            user_json.addProperty("username", usuario);
-                            user_json.addProperty("name", nombre);
-                            user_json.addProperty("surname", apellido);
-                            user_json.addProperty("email", email);
-                            user_json.addProperty("phone", telefono);
-                            user_json.addProperty("genere", genero);
-                            user_json.addProperty("password", encode_hash);
+                                String encode_hash = Utils.encode(password, "16", 29000);
 
-                            Call<Void> call = userService.registerUser(user_json);
-                            call.enqueue(new Callback<Void>() {
-                                @Override
-                                public void onResponse(Call<Void> call, Response<Void> response) {
-                                    if (response.code() == 200) {
-                                        Toast.makeText(RegistrationActivity.this, "User registered", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        try {
-                                            Toast.makeText(RegistrationActivity.this, Objects.requireNonNull(response.errorBody()).string(), Toast.LENGTH_SHORT).show();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
+                                JsonObject user_json = new JsonObject();
+                                user_json.addProperty("username", usuario);
+                                user_json.addProperty("name", nombre);
+                                user_json.addProperty("surname", apellido);
+                                user_json.addProperty("email", email);
+                                user_json.addProperty("phone", telefono);
+                                user_json.addProperty("genere", genero);
+                                user_json.addProperty("password", encode_hash);
+
+                                Call<Void> call = userService.registerUser(user_json);
+                                call.enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                        if (response.code() == 200) {
+                                            Toast.makeText(RegistrationActivity.this, "User registered", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            try {
+                                                Toast.makeText(RegistrationActivity.this, Objects.requireNonNull(response.errorBody()).string(), Toast.LENGTH_SHORT).show();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
                                         }
                                     }
-                                }
 
-                                @Override
-                                public void onFailure(Call<Void> call, Throwable t) {
-                                    Log.d("Registro", t.getMessage());
-                                }
-                            });
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        Log.d("Registro", t.getMessage());
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(RegistrationActivity.this, "ERROR: Todos los campos tienen que rellenarse", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(RegistrationActivity.this, "ERROR: Todos los campos tienen que rellenarse", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationActivity.this, "ERROR: Telefono invalido", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(RegistrationActivity.this, "ERROR: Contraseña invalida, recuerda usar numeros, letras y simbolos", Toast.LENGTH_SHORT).show();
