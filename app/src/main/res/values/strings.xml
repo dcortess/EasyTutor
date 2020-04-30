@@ -6,4 +6,5 @@
     <string name="Nombre">Nombre</string>
     <string name="genero">Género</string>
     <string name="telefono">Teléfono</string>
+    <string name="logout">Logout</string>
 </resources>

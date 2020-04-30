@@ -11,6 +11,8 @@ public interface IUserDAO {
 
     @POST("account/create_token")
     Call<ResponseBody> createTokenUser(@Header("Authorization") String auth);
+    @POST("account/delete_token")
+    Call<ResponseBody> deleteTokenUser(@Header("Authorization") String auth);
 
     /*
      * @Jordi: Molt més simple utilitzar la classe User, així no cal treballar amb json

@@ -16,6 +16,12 @@ public class UserDAOImpl implements IUserDAO {
         return retrofit.create(IUserDAO.class).createTokenUser(auth);
 
     }
+    @Override
+    public Call<ResponseBody> deleteTokenUser(String auth){
+
+        return retrofit.create(IUserDAO.class).deleteTokenUser(auth);
+
+    }
 
     @Override
     public Call<User> getProfileUser(String auth){

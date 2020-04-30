@@ -11,6 +11,9 @@ public interface UserServiceI {
     @POST("account/create_token")
     void createTokenUser(@Header("Authorization") String auth);
 
+    @POST("account/delete_token")
+    void deleteTokenUser(@Header("Authorization") String auth);
+
     @POST("account/profile")
     void getProfileUser(@Header("Authorization") String auth);
 

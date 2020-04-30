@@ -2,6 +2,7 @@ package cat.udl.tidic.amb.easytutor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,7 @@ public class RegistrationActivity extends AppCompatActivity {
     Button registrarse;
     RadioButton hombre;
     RadioButton mujer;
+    boolean userRegistered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                     public void onResponse(Call<Void> call, Response<Void> response) {
                                         if (response.code() == 200) {
                                             Toast.makeText(RegistrationActivity.this, "User registered", Toast.LENGTH_SHORT).show();
+                                            userRegistered=true;
                                         } else {
                                             try {
                                                 Toast.makeText(RegistrationActivity.this, Objects.requireNonNull(response.errorBody()).string(), Toast.LENGTH_SHORT).show();
@@ -124,6 +127,10 @@ public class RegistrationActivity extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(RegistrationActivity.this, "ERROR: Correo electronico invalido", Toast.LENGTH_SHORT).show();
+                }
+                if(userRegistered){
+                    Intent login = new Intent(RegistrationActivity.this, MainActivity.class);
+                    startActivity(login);
                 }
             }
         });

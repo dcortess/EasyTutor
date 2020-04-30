@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Button login;
     EditText user;
     EditText pass;
+    private SharedPreferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(String s) {
                 // TODO: Assegurar que s conté un token i no un missatge d'error.
+
+                mPreferences.edit().putString("token",s).apply();
                 Intent intent = new Intent (MainActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }

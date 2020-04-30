@@ -25,10 +25,12 @@ public class UserServiceImpl implements UserServiceI {
 
     public final MutableLiveData<String> token;
     public final MutableLiveData<User> user;
+    public final MutableLiveData<String> deleteToken;
     public UserServiceImpl() {
         userDAO = new UserDAOImpl();
         token = new MutableLiveData<>();
         user = new MutableLiveData<>();
+        deleteToken = new MutableLiveData<>();
     }
     public MutableLiveData<String> getLiveDataToken(){
         return token;
@@ -70,6 +72,40 @@ public class UserServiceImpl implements UserServiceI {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d("UserService", t.getMessage());
                 token.setValue(t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void deleteTokenUser(String auth){
+        userDAO.deleteTokenUser(auth).enqueue(new Callback<ResponseBody>(){
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code() == 200 ) {
+                    try {
+
+                            PreferencesProvider.providePreferences().edit().putString("token", "").apply();
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    String aux = null;
+                    try {
+                        String r = response.errorBody().string();
+                        deleteToken.setValue(r);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("UserService", t.getMessage());
+                deleteToken.setValue(t.getMessage());
             }
         });
     }

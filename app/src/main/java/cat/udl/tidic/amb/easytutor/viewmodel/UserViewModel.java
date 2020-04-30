@@ -46,6 +46,10 @@ public class UserViewModel extends AndroidViewModel {
         this.repository.createTokenUser(_token);
     }
 
+    public void deleteTokenUser(){
+        String auth = this.mPreferences.getString("token","");
+        this.repository.deleteTokenUser(auth);
+    }
     public LiveData<User> getResponseLiveDataUser() {
         return this.responseLiveUser;
     }
