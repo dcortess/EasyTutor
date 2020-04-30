@@ -1,5 +1,7 @@
 package cat.udl.tidic.amb.easytutor.dao;
 
+import com.google.gson.JsonObject;
+
 import cat.udl.tidic.amb.easytutor.models.User;
 import cat.udl.tidic.amb.easytutor.network.RetrofitClientInstance;
 import okhttp3.ResponseBody;
@@ -16,12 +18,23 @@ public class UserDAOImpl implements IUserDAO {
         return retrofit.create(IUserDAO.class).createTokenUser(auth);
 
     }
+    @Override
+    public Call<ResponseBody> deleteTokenUser(String auth){
+
+        return retrofit.create(IUserDAO.class).deleteTokenUser(auth);
+
+    }
 
     @Override
     public Call<User> getProfileUser(String auth){
 
         return retrofit.create(IUserDAO.class).getProfileUser(auth);
 
+    }
+
+    @Override
+    public Call<ResponseBody> updateProfileUser(String auth, JsonObject json) {
+        return retrofit.create(IUserDAO.class).updateProfileUser(auth,json);
     }
 
 }

@@ -9,6 +9,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.JsonObject;
+
 import java.nio.charset.StandardCharsets;
 
 import cat.udl.tidic.amb.easytutor.models.User;
@@ -46,6 +48,23 @@ public class UserViewModel extends AndroidViewModel {
         this.repository.createTokenUser(_token);
     }
 
+    public void deleteTokenUser(){
+        String auth = this.mPreferences.getString("token","");
+        this.repository.deleteTokenUser(auth);
+    }
+
+    public void updateProfileUser(String name, String surname, String zone, String phone, String gender, String email, String photo) {
+        String auth = this.mPreferences.getString("token","");
+        JsonObject json = new JsonObject();
+        json.addProperty("name", name);
+        json.addProperty("surname", surname);
+        json.addProperty("zone", zone);
+        json.addProperty("phone", phone);
+        json.addProperty("email", email);
+        json.addProperty("photo", photo);
+        json.addProperty("gender", gender);
+        this.repository.updateProfileUser(auth, json);
+    }
     public LiveData<User> getResponseLiveDataUser() {
         return this.responseLiveUser;
     }

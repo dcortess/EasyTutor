@@ -174,20 +174,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_email" />
 
-    <EditText
-        android:id="@+id/editText_genero"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#8D8A8A8A"
-        android:backgroundTint="#FFFFFF"
-        android:ems="10"
-        android:hint="M/F"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.833"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
@@ -219,13 +205,14 @@
         android:id="@+id/button_registrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Registrarse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.815"
+        app:layout_constraintHorizontal_bias="0.823"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.823" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup2"
+        app:layout_constraintVertical_bias="0.218" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -248,5 +235,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.374"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        tools:ignore="MissingConstraints">
+
+        <RadioButton
+            android:id="@+id/radioButton_hombre"
+            android:layout_width="400px"
+            android:layout_height="wrap_content"
+            android:text="Hombre"
+            android:textColor="#000000" />
+
+        <RadioButton
+            android:id="@+id/radioButton_mujer"
+            android:layout_width="350px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mujer"
+            android:textColor="#000000" />
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
