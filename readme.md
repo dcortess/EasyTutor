@@ -1,7 +1,7 @@
 # TODO
 @Registre: Heu de verificar que els camps són correctes, un email conté el format: x@x.com, o bé un telèfon té el format 660618856 i així amb tots els camps del registre. -> David
 
-@Notificacions: S'ha de notificar a l'usuari de tots els errors, per millora la seva experiència amb la vostra aplicació. -> Divid/Carlos
+@Notificacions: S'ha de notificar a l'usuari de tots els errors, per millora la seva experiència amb la vostra aplicació. -> Divid
 
 @Registre: Després del registre s'ha de tornar a la pantalla de login. -> Carlos
 
