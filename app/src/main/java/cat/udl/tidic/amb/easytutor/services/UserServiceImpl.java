@@ -4,6 +4,8 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.JsonObject;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -136,4 +138,27 @@ public class UserServiceImpl implements UserServiceI {
             }
         });
     }
+
+    @Override
+    public void updateProfileUser(String header, JsonObject json) {
+        userDAO.updateProfileUser(header,json).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code() == 200) {
+
+
+                } else {
+                    Log.d("updateProfileUser", "error else");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("updateProfileUser", t.toString());
+
+            }
+        });
+    }
+
 }
