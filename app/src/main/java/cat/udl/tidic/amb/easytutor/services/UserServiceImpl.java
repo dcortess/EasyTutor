@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserServiceI {
                     String aux = null;
                     try {
                         String r = response.errorBody().string();
-                        token.setValue(r);
+                        token.setValue(null);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserServiceI {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d("UserService", t.getMessage());
-                token.setValue(t.getMessage());
+                token.setValue(null);
             }
         });
     }

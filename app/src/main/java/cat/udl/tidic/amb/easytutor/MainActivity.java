@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 import cat.udl.tidic.amb.easytutor.network.RetrofitClientInstance;
+import cat.udl.tidic.amb.easytutor.preferences.PreferencesProvider;
 import cat.udl.tidic.amb.easytutor.services.UserService;
 import cat.udl.tidic.amb.easytutor.viewmodel.UserViewModel;
 import retrofit2.Call;
@@ -26,6 +27,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+
+    // Us he d'acostumar a fer servir les eines de log!
+    private String TAG = "Main Activity";
 
     UserViewModel userViewModel;
     Button login;
@@ -44,14 +48,34 @@ public class MainActivity extends AppCompatActivity {
         user= findViewById(R.id.editText_user);
         pass= findViewById(R.id.editText_pass);
 
+        //@JordiMateoUdL Sense aquesta línia mai funcionarà!!!!!
+        mPreferences = PreferencesProvider.providePreferences();
+
+        //@JordiMateoUdL Què passa si l'usuari ja ha aconseguit el token! No s'ha de tornar a registrar!
+        String token = mPreferences.getString("token","");
+        if (!token.equals("")){
+            moveNext();
+        }
+
+
+
         userViewModel = new UserViewModel(getApplication());
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //@JordiMateoUdL Què passa si no introdueixo texts als formularis!
                 String _username= user.getText().toString();
                 String _password= pass.getText().toString();
-                userViewModel.createTokenUser(_username,_password);
+
+
+                if (_username.equals("") || _password.equals("")) {
+                    // Heu de notificar a l'usuari error de login
+                    Log.d(TAG, "Tots els camps són obligatoris!");
+                }else{
+                    userViewModel.createTokenUser(_username, _password);
+
+                }
 
             }
         });
@@ -64,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
         /*
          * @Jordi: S'ha d'observar, si no, el MVVM no té sentit, ningú notifica a la UI.
          * */
@@ -72,12 +100,21 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(String s) {
                 // TODO: Assegurar que s conté un token i no un missatge d'error.
 
-                mPreferences.edit().putString("token",s).apply();
-                Intent intent = new Intent (MainActivity.this, ProfileActivity.class);
-                startActivity(intent);
+                if (s != null){
+                    moveNext();
+                }else{
+                    Log.d(TAG,"Hi ha  errors en el login, intentant aconseguir el token de l'api " +
+                            "però API ha retornat error!!!");
+                    // Notificar error a l'usuari.
+                }
+
             }
         });
-
-
     }
+
+    public void moveNext(){
+        Intent intent = new Intent (this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
 }
