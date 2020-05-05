@@ -54,6 +54,13 @@ public class LoginUtils {
         return check;
     }
 
+    public static boolean isAllLogin(String username, String password){
+        if (username.equals("") || password.equals("")){
+            return false;
+        }
+        return true;
+    }
+
     //TODO: isValidGmailAddress(String email)
     //TODO: Make this methods static
     //TODO: getUserName as the part before @, make the test.
