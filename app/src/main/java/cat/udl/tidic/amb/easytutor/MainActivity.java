@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import cat.udl.tidic.amb.easytutor.viewmodel.UserViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,8 +38,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String _username= user.getText().toString();
                 String _password= pass.getText().toString();
-                userViewModel.createTokenUser(_username,_password);
-
+                if (LoginUtils.isAllLogin(_username, _password)){
+                    userViewModel.createTokenUser(_username,_password);
+                    Intent intent = new Intent (v.getContext(), ProfileActivity.class);
+                    startActivityForResult(intent, 0);
+                } else {
+                    Toast.makeText(MainActivity.this, "ERROR: Rellena todos los campos", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

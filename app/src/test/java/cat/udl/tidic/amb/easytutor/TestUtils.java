@@ -41,8 +41,13 @@ public class TestUtils {
     @Test
     public void loginAllFull() throws Exception{
         String username = "user1";
+        String emptyUsername ="";
         String password = "MyPasSworD$$";
+        String emptyPassword = "";
         Assert.assertTrue(LoginUtils.isAllLogin(username, password));
+        Assert.assertFalse(LoginUtils.isAllLogin(emptyUsername, password));
+        Assert.assertFalse(LoginUtils.isAllLogin(username, emptyPassword));
+        Assert.assertFalse(LoginUtils.isAllLogin(emptyUsername, emptyPassword));
     }
 
 }
