@@ -2,28 +2,14 @@ package cat.udl.tidic.amb.easytutor;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.gson.JsonObject;
-
-import java.io.IOException;
-import java.util.Objects;
-
-import cat.udl.tidic.amb.easytutor.network.RetrofitClientInstance;
-import cat.udl.tidic.amb.easytutor.services.UserService;
 import cat.udl.tidic.amb.easytutor.viewmodel.UserViewModel;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 

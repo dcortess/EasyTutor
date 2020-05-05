@@ -3,16 +3,12 @@ package cat.udl.tidic.amb.easytutor.viewmodel;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.util.Base64;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import com.google.gson.JsonObject;
-
 import java.nio.charset.StandardCharsets;
-
 import cat.udl.tidic.amb.easytutor.models.User;
 import cat.udl.tidic.amb.easytutor.preferences.PreferencesProvider;
 import cat.udl.tidic.amb.easytutor.services.UserServiceI;

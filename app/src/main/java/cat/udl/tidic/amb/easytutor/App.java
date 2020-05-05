@@ -1,6 +1,6 @@
 package cat.udl.tidic.amb.easytutor;
-import android.app.Application;
 
+import android.app.Application;
 import cat.udl.tidic.amb.easytutor.preferences.PreferencesProvider;
 
 public class App extends Application {

@@ -1,7 +1,6 @@
 package cat.udl.tidic.amb.easytutor.dao;
 
 import com.google.gson.JsonObject;
-
 import cat.udl.tidic.amb.easytutor.models.User;
 import cat.udl.tidic.amb.easytutor.network.RetrofitClientInstance;
 import okhttp3.ResponseBody;

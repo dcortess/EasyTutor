@@ -1,7 +1,6 @@
 package cat.udl.tidic.amb.easytutor;
 
 import android.util.Base64;
-
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

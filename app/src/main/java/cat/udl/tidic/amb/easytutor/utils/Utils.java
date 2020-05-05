@@ -3,7 +3,6 @@ package cat.udl.tidic.amb.easytutor.utils;
 import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.bouncycastle.crypto.generators.PKCS5S2ParametersGenerator;
 import org.bouncycastle.crypto.params.KeyParameter;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Locale;

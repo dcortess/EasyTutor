@@ -1,9 +1,7 @@
 package cat.udl.tidic.amb.easytutor.services;
 
 import androidx.lifecycle.MutableLiveData;
-
 import com.google.gson.JsonObject;
-
 import cat.udl.tidic.amb.easytutor.models.User;
 import retrofit2.http.Header;
 import retrofit2.http.POST;

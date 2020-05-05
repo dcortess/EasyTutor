@@ -7,13 +7,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-
 import cat.udl.tidic.amb.easytutor.models.User;
 import cat.udl.tidic.amb.easytutor.preferences.PreferencesProvider;
 import cat.udl.tidic.amb.easytutor.viewmodel.UserViewModel;
