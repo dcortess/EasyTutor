@@ -1,7 +1,6 @@
 package cat.udl.tidic.amb.easytutor;
 
 import android.util.Base64;
-
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,6 +52,13 @@ public class LoginUtils {
             check=false;
         }
         return check;
+    }
+
+    public static boolean isAllLogin(String username, String password){
+        if (username.equals("") || password.equals("")){
+            return false;
+        }
+        return true;
     }
 
     //TODO: isValidGmailAddress(String email)

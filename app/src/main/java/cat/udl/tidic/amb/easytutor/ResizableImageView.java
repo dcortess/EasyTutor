@@ -3,7 +3,6 @@ package cat.udl.tidic.amb.easytutor;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 public class ResizableImageView extends androidx.appcompat.widget.AppCompatImageView {
     public ResizableImageView(Context context, AttributeSet attrs) {

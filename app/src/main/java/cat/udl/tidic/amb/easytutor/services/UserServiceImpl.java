@@ -1,16 +1,9 @@
 package cat.udl.tidic.amb.easytutor.services;
 
 import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
-
 import com.google.gson.JsonObject;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-
 import cat.udl.tidic.amb.easytutor.dao.IUserDAO;
 import cat.udl.tidic.amb.easytutor.dao.UserDAOImpl;
 import cat.udl.tidic.amb.easytutor.models.User;

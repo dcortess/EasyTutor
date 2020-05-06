@@ -10,12 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
-
 import com.google.gson.JsonObject;
-
 import java.io.IOException;
 import java.util.Objects;
-
 import cat.udl.tidic.amb.easytutor.network.RetrofitClientInstance;
 import cat.udl.tidic.amb.easytutor.services.UserService;
 import cat.udl.tidic.amb.easytutor.utils.Utils;
@@ -53,7 +50,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         registrarse.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 String nombre = edt_nombre.getText().toString();
                 String apellido = edt_apellido.getText().toString();
                 String usuario = edt_usuario.getText().toString();
@@ -102,6 +99,8 @@ public class RegistrationActivity extends AppCompatActivity {
                                         if (response.code() == 200) {
                                             Toast.makeText(RegistrationActivity.this, "User registered", Toast.LENGTH_SHORT).show();
                                             userRegistered=true;
+                                            Intent intent = new Intent (v.getContext(), ProfileActivity.class);
+                                            startActivityForResult(intent, 0);
                                         } else {
                                             try {
                                                 Toast.makeText(RegistrationActivity.this, Objects.requireNonNull(response.errorBody()).string(), Toast.LENGTH_SHORT).show();

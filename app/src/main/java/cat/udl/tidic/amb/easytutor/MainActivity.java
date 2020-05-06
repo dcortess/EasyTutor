@@ -2,11 +2,9 @@ package cat.udl.tidic.amb.easytutor;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,10 +19,8 @@ import java.util.Objects;
 import cat.udl.tidic.amb.easytutor.network.RetrofitClientInstance;
 import cat.udl.tidic.amb.easytutor.preferences.PreferencesProvider;
 import cat.udl.tidic.amb.easytutor.services.UserService;
+
 import cat.udl.tidic.amb.easytutor.viewmodel.UserViewModel;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,13 +64,12 @@ public class MainActivity extends AppCompatActivity {
                 String _username= user.getText().toString();
                 String _password= pass.getText().toString();
 
-
-                if (_username.equals("") || _password.equals("")) {
-                    // Heu de notificar a l'usuari error de login
-                    Log.d(TAG, "Tots els camps són obligatoris!");
-                }else{
-                    userViewModel.createTokenUser(_username, _password);
-
+                if (LoginUtils.isAllLogin(_username, _password)){
+                    userViewModel.createTokenUser(_username,_password);
+                    Intent intent = new Intent (v.getContext(), ProfileActivity.class);
+                    startActivityForResult(intent, 0);
+                } else {
+                    Toast.makeText(MainActivity.this, "ERROR: Rellena todos los campos", Toast.LENGTH_SHORT).show();
                 }
 
             }
