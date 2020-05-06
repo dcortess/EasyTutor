@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import cat.udl.tidic.amb.easytutor.models.User;
 import cat.udl.tidic.amb.easytutor.preferences.PreferencesProvider;
@@ -24,7 +25,6 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView phone;
     private TextView gender;
     private String TAG ="ProfileActivity";
-    private Button logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
         email = findViewById(R.id.textView22);
         phone = findViewById(R.id.textView24);
         gender = findViewById(R.id.textView23);
-        logout = findViewById(R.id.btLogout);
+
 
         //Falta fer la petició
         userViewModel.getProfileUser();
@@ -62,8 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_menu, menu);
+        getMenuInflater().inflate(R.menu.activity_menu, menu);
         return true;
     }
 
@@ -72,13 +71,19 @@ public class ProfileActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.itemLogout:
                 userViewModel.deleteTokenUser();
-                this.mPreferences.edit().remove("token").commit();
+                this.mPreferences.edit().remove("token").apply();
                 Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
                 startActivity(intent);
-                return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // @JordiMateoUdl -> El token esta guardat, per tant ja no s'ha de tornar a login/registre, fins
+    // que l'usuari decideixi tancar la sessió. //Quan modifiqueu la vista principal, això també s'ha de moure!!!!!
+    @Override
+    public void onBackPressed(){
+        Log.d(TAG, "BackPressed -> Good bye, but we not ask log again when return!");
+        ActivityCompat.finishAffinity(this);
     }
 }
