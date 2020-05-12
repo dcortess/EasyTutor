@@ -93,8 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
+        
 
         /*
          * @Jordi: S'ha d'observar, si no, el MVVM no té sentit, ningú notifica a la UI.
