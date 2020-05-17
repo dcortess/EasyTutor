@@ -38,7 +38,6 @@ public class AddOfferActivity extends AppCompatActivity implements
     RadioButton doy_clases;
     RadioButton busco_clases;
 
-
     @Override
     public void onItemSelected (AdapterView < ? > arg0, View arg1,int position, long id){
         if(levels[position].equals("Primaria")){
@@ -75,7 +74,6 @@ public class AddOfferActivity extends AppCompatActivity implements
         //Setting the ArrayAdapter data on the Spinner
         spin.setAdapter(aa);
 
-
         edt_title = findViewById(R.id.editText_title);
         edt_description = findViewById(R.id.textInput_description);
         edt_price = findViewById(R.id.editText_price);
@@ -86,7 +84,6 @@ public class AddOfferActivity extends AppCompatActivity implements
         doy_clases = findViewById(R.id.radioButton_doy);
         busco_clases = findViewById(R.id.radioButton_busco);
 
-
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -94,59 +91,82 @@ public class AddOfferActivity extends AppCompatActivity implements
                 String description = edt_description.getText().toString();
                 Float price = Float.parseFloat(edt_price.getText().toString());
                 String send_level = level;
-                Boolean admits_negotiation = false;
+                boolean admits_negotiation = false;
                 Integer distance = Integer.parseInt(distance_to_serve.getText().toString());
                 String type = "";
+                boolean allRight = true;
 
                 if(yes_negotiation.isChecked()){
                     admits_negotiation = true;
                 } else if(no_negotiation.isChecked()){
                     admits_negotiation = false;
+                } else {
+                    allRight = false;
+                    Toast.makeText(AddOfferActivity.this, "Por favor selecciona si el precio es negociable", Toast.LENGTH_SHORT).show();
                 }
 
                 if(doy_clases.isChecked()){
                     type = "D";
                 } else if(busco_clases.isChecked()){
                     type = "B";
+                } else {
+                    allRight = false;
+                    Toast.makeText(AddOfferActivity.this, "Por favor selecciona si das o buscas clases", Toast.LENGTH_SHORT).show();
                 }
 
-                UserService userService;
-                userService = RetrofitClientInstance.
-                        getRetrofitInstance().create(UserService.class);
+                if (!AddOfferUtils.isValidTitle(title)){
+                    allRight = false;
+                    Toast.makeText(AddOfferActivity.this, "Título demasiado largo, máx. 40 carácteres", Toast.LENGTH_SHORT).show();
+                }
 
+                if (!AddOfferUtils.isValidDescription(description)){
+                    allRight = false;
+                    Toast.makeText(AddOfferActivity.this, "Descripción demasiado larga, máx. 250 carácteres", Toast.LENGTH_SHORT).show();
+                }
 
-                JsonObject user_json = new JsonObject();
-                user_json.addProperty("title", title);
-                user_json.addProperty("description", description);
-                user_json.addProperty("price", price);
-                user_json.addProperty("level", send_level);
-                user_json.addProperty("admits_negotiation", admits_negotiation);
-                user_json.addProperty("distance_to_serve", distance);
-                user_json.addProperty("type", type);
+                if (!AddOfferUtils.isReasonablePrice(price)){
+                    allRight = false;
+                    Toast.makeText(AddOfferActivity.this, "Por favor introduce un precio razonable (1-30€)", Toast.LENGTH_SHORT).show();
+                }
 
-                Call<Void> call = userService.registerUser(user_json);
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.code() == 200) {
-                            Toast.makeText(AddOfferActivity.this, "Anuncio publicado correctamente", Toast.LENGTH_SHORT).show();
-                            offer_posted=true;
-                            Intent intent = new Intent (v.getContext(), ProfileActivity.class); //Canviar a HomeActivity quan existeixi
-                            startActivityForResult(intent, 0);
-                        } else {
-                            try {
-                                Toast.makeText(AddOfferActivity.this, Objects.requireNonNull(response.errorBody()).string(), Toast.LENGTH_SHORT).show();
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                if (allRight) {
+                    UserService userService;
+                    userService = RetrofitClientInstance.
+                            getRetrofitInstance().create(UserService.class);
+
+                    JsonObject user_json = new JsonObject();
+                    user_json.addProperty("title", title);
+                    user_json.addProperty("description", description);
+                    user_json.addProperty("price", price);
+                    user_json.addProperty("level", send_level);
+                    user_json.addProperty("admits_negotiation", admits_negotiation);
+                    user_json.addProperty("distance_to_serve", distance);
+                    user_json.addProperty("type", type);
+
+                    Call<Void> call = userService.registerUser(user_json);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.code() == 200) {
+                                Toast.makeText(AddOfferActivity.this, "Anuncio publicado correctamente", Toast.LENGTH_SHORT).show();
+                                offer_posted = true;
+                                Intent intent = new Intent(v.getContext(), ProfileActivity.class); //Canviar a HomeActivity quan existeixi
+                                startActivityForResult(intent, 0);
+                            } else {
+                                try {
+                                    Toast.makeText(AddOfferActivity.this, Objects.requireNonNull(response.errorBody()).string(), Toast.LENGTH_SHORT).show();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Log.d("Registro", t.getMessage());
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.d("Registro", t.getMessage());
+                        }
+                    });
+                }
             }
         });
     }

@@ -11,8 +11,8 @@ public class LoginUtils {
      * This method checks if the provided string represents a valid email address and returns true
      * if it is.
      *
-     * @param email
-     * @return
+     * @param email email address
+     * @return boolean
      */
 
     public static boolean isValidEmailAddress(String email){
@@ -26,8 +26,8 @@ public class LoginUtils {
      * 1 Uppercase
      * 1 symbol in this set @#$%^&+=!
      * 1 number
-     * @param password
-     * @return
+     * @param password password
+     * @return boolean
      */
 
     public static boolean isValidPassword(final String password) {
@@ -38,6 +38,13 @@ public class LoginUtils {
         matcher = pattern.matcher(password);
         return matcher.matches();
     }
+
+    /**
+     * This method check if the provided string represents a valid phone and returns true if it
+     * is. A valid phone must have a minimum lenght of 6 and maximum of 13, just numbers
+     * @param phone phone number
+     * @return boolean
+     */
 
     public static boolean isValidPhone(String phone) {
         boolean check=false;
@@ -54,6 +61,13 @@ public class LoginUtils {
         return check;
     }
 
+    /**
+     * This method check if all login EditTexts (username and password) aren't empty.
+     * @param username user name
+     * @param password password
+     * @return boolean
+     */
+
     public static boolean isAllLogin(String username, String password){
         if (username.equals("") || password.equals("")){
             return false;
@@ -61,11 +75,9 @@ public class LoginUtils {
         return true;
     }
 
-    //TODO: isValidGmailAddress(String email)
-    //TODO: Make this methods static
     //TODO: getUserName as the part before @, make the test.
 
-    public String encodeLogin(String username, String password){
+    public static String encodeLogin(String username, String password){
         String header = username + ":" + password;
         byte[] data = header.getBytes(StandardCharsets.UTF_8);
         header = Base64.encodeToString(data, Base64.DEFAULT);

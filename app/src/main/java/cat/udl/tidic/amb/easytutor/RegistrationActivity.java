@@ -73,7 +73,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         if (LoginUtils.isValidPhone(telefono)) {
 
                             if (genero.equals("")){
-                                Toast.makeText(RegistrationActivity.this, "ERROR: Por favor indica un genero", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegistrationActivity.this, "ERROR: Por favor indica un género", Toast.LENGTH_SHORT).show();
                             }
 
                             if (!nombre.equals("") && !apellido.equals("") && !usuario.equals("") && !email.equals("") && !password.equals("") && !genero.equals("") && !telefono.equals("")) {
@@ -119,13 +119,13 @@ public class RegistrationActivity extends AppCompatActivity {
                                 Toast.makeText(RegistrationActivity.this, "ERROR: Todos los campos tienen que rellenarse", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(RegistrationActivity.this, "ERROR: Telefono invalido", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationActivity.this, "ERROR: Teléfono inválido", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(RegistrationActivity.this, "ERROR: Contraseña invalida, recuerda usar numeros, letras y simbolos", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegistrationActivity.this, "ERROR: Contraseña inválida, recuerda usar numeros, letras y símbolos", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(RegistrationActivity.this, "ERROR: Correo electronico invalido", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, "ERROR: Correo electrónico inválido", Toast.LENGTH_SHORT).show();
                 }
                 if(userRegistered){
                     Intent login = new Intent(RegistrationActivity.this, MainActivity.class);
