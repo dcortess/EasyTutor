@@ -12,14 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
-
-import java.io.IOException;
-import java.util.Objects;
-
-import cat.udl.tidic.amb.easytutor.network.RetrofitClientInstance;
 import cat.udl.tidic.amb.easytutor.preferences.PreferencesProvider;
-import cat.udl.tidic.amb.easytutor.services.UserService;
 
 import cat.udl.tidic.amb.easytutor.viewmodel.UserViewModel;
 
@@ -61,17 +54,21 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 //@JordiMateoUdL Què passa si no introdueixo texts als formularis!
                 String _username= user.getText().toString();
                 String _password= pass.getText().toString();
 
                 if (LoginUtils.isAllLogin(_username, _password)){
                     userViewModel.createTokenUser(_username,_password);
-                    Intent intent = new Intent (v.getContext(), ProfileActivity.class);
-                    startActivityForResult(intent, 0);
+                    Intent intent = new Intent(MainActivity.this, AnuncisActivity.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "ERROR: Rellena todos los campos", Toast.LENGTH_SHORT).show();
-                }
+                }*/
+                Intent intent = new Intent(MainActivity.this, AnuncisActivity.class);
+                startActivity(intent);
+
 
             }
         });
