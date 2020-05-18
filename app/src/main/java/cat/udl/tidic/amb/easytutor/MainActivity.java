@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
+
                 //@JordiMateoUdL Què passa si no introdueixo texts als formularis!
                 String _username= user.getText().toString();
                 String _password= pass.getText().toString();
@@ -66,9 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "ERROR: Rellena todos los campos", Toast.LENGTH_SHORT).show();
-                }*/
-                Intent intent = new Intent(MainActivity.this, AnuncisActivity.class);
-                startActivity(intent);
+                }
 
 
             }

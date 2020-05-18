@@ -65,6 +65,7 @@ public class AnuncisActivity extends AppCompatActivity {
         anunciViewModel.getResponseLiveDataAnuncis().observe(this, new Observer<List<Anunci>>() {
             @Override
             public void onChanged(List<Anunci> anuncis) {
+                //seria millor filtrar amb una crida a la API, queda pendent
                 if(doy.isChecked()){
                     List<Anunci> doyList = new ArrayList<Anunci>();
 
@@ -96,8 +97,7 @@ public class AnuncisActivity extends AppCompatActivity {
         createAnunci.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AnuncisActivity.this, AnunciActivity.class);
-                intent.putExtra("id","1");
+                Intent intent = new Intent(AnuncisActivity.this, AddOfferActivity.class);
                 startActivity(intent);
             }
         });
