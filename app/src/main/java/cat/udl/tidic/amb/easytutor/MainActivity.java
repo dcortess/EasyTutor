@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView register = findViewById(R.id.textView_register);
+        TextView forgot = findViewById(R.id.textView_forgot);
 
         login= findViewById(R.id.button_login);
         user= findViewById(R.id.editText_user);
@@ -81,7 +82,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (v.getContext(), AddOfferActivity.class);
+                startActivityForResult(intent, 0);
+            }
+        });
 
 
 
