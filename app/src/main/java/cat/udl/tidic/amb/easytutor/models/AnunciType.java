@@ -12,4 +12,8 @@ public enum AnunciType {
         id = _id;
         name = _name;
     }
+
+    public String getType(){
+        return this.id;
+    }
 }

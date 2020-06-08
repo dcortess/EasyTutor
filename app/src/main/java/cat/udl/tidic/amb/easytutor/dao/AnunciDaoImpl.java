@@ -17,4 +17,7 @@ public class AnunciDaoImpl implements IAnunciDAO {
     @Override
     public Call<Anunci> getAnunci(String auth, String id) { return retrofit.create(IAnunciDAO.class).getAnunci(auth,id);}
 
+    @Override
+    public Call<List<Anunci>> getAnuncisFiltered(String auth, String type){return retrofit.create(IAnunciDAO.class).getAnuncisFiltered(auth, type);}
+
 }

@@ -28,7 +28,7 @@ public class AnunciAdapter extends ListAdapter <Anunci, AnunciAdapter.AnunciHold
     @Override
     public AnunciHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_anunci_list,
-                null, false);
+                parent, false);
         return new AnunciHolder(itemView);
     }
 
@@ -37,7 +37,7 @@ public class AnunciAdapter extends ListAdapter <Anunci, AnunciAdapter.AnunciHold
         final Anunci anunci = getItem(position);
         Log.d(TAG, "onBindViewHolder() -> anunci: " + anunci);
         holder.textViewTitle.setText(anunci.getTitle());
-        holder.textViewLevel.setText(anunci.getLevel().toString());
+        holder.textViewLevel.setText(anunci.getLevel().getName());
         float auxPrice = anunci.getPrice();
         String priceFormat = Float.toString(auxPrice) + " €/H";
         holder.textViewPrice.setText(priceFormat);

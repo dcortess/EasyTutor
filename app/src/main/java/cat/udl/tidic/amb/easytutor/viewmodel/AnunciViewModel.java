@@ -5,14 +5,12 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
 import cat.udl.tidic.amb.easytutor.models.Anunci;
 import cat.udl.tidic.amb.easytutor.preferences.PreferencesProvider;
-import cat.udl.tidic.amb.easytutor.services.AnunciServiceI;
 import cat.udl.tidic.amb.easytutor.services.AnunciServiceImpl;
 
 
@@ -37,6 +35,11 @@ public class AnunciViewModel extends AndroidViewModel {
     public void getAnuncis(){
         String header = this.mPreferences.getString("token","");
         repository.getAnuncis(header);
+    }
+
+    public void getAnuncisFiltered(String type){
+        String header = this.mPreferences.getString("token", "");
+        repository.getAnuncisFiltered(header,type);
     }
 
     public void getAnunci(String id){

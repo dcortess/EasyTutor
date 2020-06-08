@@ -51,6 +51,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         userViewModel = new UserViewModel(getApplication());
+        userViewModel.getResponseLiveDataToken().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                // TODO: Assegurar que s conté un token i no un missatge d'error.
+
+                if (s != null){
+                    moveNext();
+                }else{
+                    Log.d(TAG,"Hi ha  errors en el login, intentant aconseguir el token de l'api " +
+                            "però API ha retornat error!!!");
+                    // Notificar error a l'usuari.
+                }
+
+            }
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,30 +103,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-        /*
-         * @Jordi: S'ha d'observar, si no, el MVVM no té sentit, ningú notifica a la UI.
-         * */
-        userViewModel.getResponseLiveDataToken().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                // TODO: Assegurar que s conté un token i no un missatge d'error.
-
-                if (s != null){
-                    moveNext();
-                }else{
-                    Log.d(TAG,"Hi ha  errors en el login, intentant aconseguir el token de l'api " +
-                            "però API ha retornat error!!!");
-                    // Notificar error a l'usuari.
-                }
-
-            }
-        });
     }
 
     public void moveNext(){
-        Intent intent = new Intent (this, ProfileActivity.class);
+        Intent intent = new Intent (this, AnuncisActivity.class);
         startActivity(intent);
     }
 

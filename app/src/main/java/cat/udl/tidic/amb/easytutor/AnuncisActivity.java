@@ -23,6 +23,7 @@ import java.util.ListIterator;
 import cat.udl.tidic.amb.easytutor.adapters.AnunciAdapter;
 import cat.udl.tidic.amb.easytutor.adapters.AnunciDiffCallback;
 import cat.udl.tidic.amb.easytutor.models.Anunci;
+import cat.udl.tidic.amb.easytutor.models.AnunciLevel;
 import cat.udl.tidic.amb.easytutor.viewmodel.AnunciViewModel;
 
 public class AnuncisActivity extends AppCompatActivity {
@@ -34,64 +35,39 @@ public class AnuncisActivity extends AppCompatActivity {
     private RadioButton todo;
     private RadioButton doy;
     private RadioButton busco;
+    private Button filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_anuncis);
+        anunciViewModel= new AnunciViewModel(this.getApplication());
         initView();
     }
 
     protected void initView() {
+
+
         todo = findViewById(R.id.radioButtonT);
         doy = findViewById(R.id.radioButtonD);
         busco = findViewById(R.id.radioButtonB);
-        setContentView(R.layout.activity_anuncis);
+        filter = findViewById(R.id.filter);
         anunciListView = findViewById(R.id.mRecycleView);
-        anunciListView.setLayoutManager(new LinearLayoutManager(this));
-        //anunciListView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        anunciAdapter = new AnunciAdapter(new AnunciDiffCallback());
-        anunciListView.setAdapter(anunciAdapter);
 
-        anunciAdapter.setOnItemClickListener(new AnunciAdapter.OnItemClickListener() {
+        //anunciViewModel.getAnuncis();
+        filter.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(Anunci anunci) {
-                Log.d(TAG, anunci.getId());
-                Intent intent = new Intent(AnuncisActivity.this, AnunciActivity.class);
-                intent.putExtra("id",anunci.getId());
+            public void onClick(View v) {
+                if (doy.isChecked()){
+                    anunciViewModel.getAnuncisFiltered("D");
+                }else if(busco.isChecked()){
+                    anunciViewModel.getAnuncisFiltered("B");
+                }else{
+                    anunciViewModel.getAnuncis();
+                }
             }
         });
-        anunciViewModel= new AnunciViewModel(this.getApplication());
-        anunciViewModel.getAnuncis();
-        anunciViewModel.getResponseLiveDataAnuncis().observe(this, new Observer<List<Anunci>>() {
-            @Override
-            public void onChanged(List<Anunci> anuncis) {
-                //seria millor filtrar amb una crida a la API, queda pendent
-                if(doy.isChecked()){
-                    List<Anunci> doyList = new ArrayList<Anunci>();
 
-                    for(int i = 0; i < anuncis.size(); i++){
-                        if(anuncis.get(i).getType().equals("D")){
-                            doyList.add(anuncis.get(i));
-                        }
-                    }
-                    anunciAdapter.submitList(doyList);
-                }
-                else if (busco.isChecked()){
-                    List<Anunci> buscoList = new ArrayList<Anunci>();
-
-                    for(int i = 0; i < anuncis.size(); i++){
-                        if(anuncis.get(i).getType().equals("B")){
-                            buscoList.add(anuncis.get(i));
-                        }
-                    }
-                    anunciAdapter.submitList(buscoList);
-                }
-                else{
-                    anunciAdapter.submitList(anuncis);
-                }
-
-            }
-        });
 
         createAnunci = findViewById(R.id.buttonAddAnunci);
         createAnunci.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +80,30 @@ public class AnuncisActivity extends AppCompatActivity {
 
 
 
-        refreshList();
+
+
+        initAnunciList();
+    }
+
+    private void initAnunciList(){
+        anunciListView.setLayoutManager(new LinearLayoutManager(this));
+        final AnunciAdapter anunciAdapter = new AnunciAdapter(new AnunciDiffCallback());
+        anunciListView.setAdapter(anunciAdapter);
+        anunciAdapter.setOnItemClickListener(new AnunciAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Anunci anunci) {
+                Log.d(TAG, anunci.getId());
+                Intent intent = new Intent(AnuncisActivity.this, AnunciActivity.class);
+                intent.putExtra("id",anunci.getId());
+            }
+        });
+
+        anunciViewModel.getResponseLiveDataAnuncis().observe(this, new Observer<List<Anunci>>() {
+            @Override
+            public void onChanged(List<Anunci> anuncis) {
+                anunciAdapter.submitList(anuncis);
+            }
+        });
     }
 
     protected void refreshList(){

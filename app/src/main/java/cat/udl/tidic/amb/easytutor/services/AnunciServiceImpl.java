@@ -73,6 +73,45 @@ public class AnunciServiceImpl implements AnunciServiceI {
     }
 
     @Override
+    public void getAnuncisFiltered(String auth, String type) {
+
+        anunciDAO.getAnuncisFiltered(auth, type).enqueue(new Callback<List<Anunci>>() {
+
+
+            @Override
+            public void onResponse(Call<List<Anunci>> call, Response<List<Anunci>> response) {
+
+                int code = response.code();
+                Log.d(TAG,  "getAnuncisFiltered() -> ha rebut del backend un codi:  " + code);
+
+                if (code == 200 ){
+                    List<Anunci> anuncis = response.body();
+                    Log.d(TAG,  "getAnuncisFiltered() -> ha rebut una llista de mida: "+ anuncis.size());
+                    mResponseAnuncis.setValue(anuncis);
+                }
+                else{
+                    try {
+                        String error_msg = "Error: " + response.errorBody().string();
+                        Log.d(TAG,  "getAnuncisFiltered() -> ha rebut l'error:  " + error_msg);
+                        mResponseAnuncis.setValue(null);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Anunci>> call, Throwable t) {
+                String error_msg = "Error: " + t.getMessage().toString();
+                Log.d(TAG,  "getAnuncisFiltered() onFailure() -> ha rebut el missatge:  " + error_msg);
+                mResponseAnuncis.setValue(null);
+            }
+        });
+
+    }
+
+    @Override
     public void getAnunci(String auth, String id) {
 
         anunciDAO.getAnunci(auth, id).enqueue(new Callback<Anunci>() {

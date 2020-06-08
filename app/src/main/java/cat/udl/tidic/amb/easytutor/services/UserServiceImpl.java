@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserServiceI {
                         String authToken = response.body().string().split(":")[1];
                         authToken = authToken.substring(2,authToken.length() -2);
                         Log.d(TAG, "Rebut el token: " + authToken);
-                        PreferencesProvider.providePreferences().edit().putString("token",authToken).apply();
+                        PreferencesProvider.providePreferences().edit().putString("token",authToken).commit();
                         token.setValue(authToken);
 
                     } catch (IOException e) {

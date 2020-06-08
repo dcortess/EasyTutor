@@ -31,7 +31,7 @@ public class Anunci {
     @SerializedName("type")
     private AnunciType type;
 
-    Anunci(){
+    public Anunci(){
 
     }
 
@@ -102,16 +102,16 @@ public class Anunci {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Anunci)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Anunci anunci = (Anunci) o;
-        return this.price == getPrice() &&
-                this.admits_negotation == isAdmits_negotation() &&
-                this.distance_to_serve == getDistance_to_serve() &&
-                this.id.equals(getId()) &&
-                this.title.equals(getTitle()) &&
-                this.level == anunci.level &&
-                this.description.equals(getDescription()) &&
-                this.type == anunci.type;
+        return Float.compare(anunci.price, price) == 0 &&
+                admits_negotation == anunci.admits_negotation &&
+                distance_to_serve == anunci.distance_to_serve &&
+                Objects.equals(id, anunci.id) &&
+                Objects.equals(title, anunci.title) &&
+                level == anunci.level &&
+                Objects.equals(description, anunci.description) &&
+                type == anunci.type;
     }
 
     @Override

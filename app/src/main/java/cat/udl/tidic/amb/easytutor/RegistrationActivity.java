@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.util.Objects;
 import cat.udl.tidic.amb.easytutor.network.RetrofitClientInstance;
 import cat.udl.tidic.amb.easytutor.services.UserService;
+import cat.udl.tidic.amb.easytutor.utils.EULA;
 import cat.udl.tidic.amb.easytutor.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,6 +25,8 @@ import retrofit2.Response;
 
 public class RegistrationActivity extends AppCompatActivity {
 
+    final EULA eula_dialog = new EULA(this);
+    CheckBox _agreement_terms_and_conditions;
     EditText edt_nombre;
     EditText edt_apellido;
     EditText edt_usuario;
@@ -47,6 +52,16 @@ public class RegistrationActivity extends AppCompatActivity {
         mujer = findViewById(R.id.radioButton_mujer);
         edt_telefono = findViewById(R.id.editText_telefono);
         registrarse = findViewById(R.id.button_registrarse);
+
+        // Accepting Terms and conditions
+        _agreement_terms_and_conditions = findViewById(R.id.agreement_terms_and_conditions);
+        _agreement_terms_and_conditions.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        eula_dialog.show(R.id.agreement_terms_and_conditions);
+                    }
+                });
 
         registrarse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +142,10 @@ public class RegistrationActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(RegistrationActivity.this, "ERROR: Correo electrónico inválido", Toast.LENGTH_SHORT).show();
                 }
+                if(!_agreement_terms_and_conditions.isChecked()){
+                    Toast.makeText(RegistrationActivity.this, "ERROR: Aceptar los terminos y condiciones es obligatorio", Toast.LENGTH_SHORT).show();
+                }
+
                 if(userRegistered){
                     Intent login = new Intent(RegistrationActivity.this, MainActivity.class);
                     startActivity(login);
