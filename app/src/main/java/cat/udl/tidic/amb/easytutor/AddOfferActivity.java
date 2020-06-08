@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.util.Objects;
 import cat.udl.tidic.amb.easytutor.network.RetrofitClientInstance;
+import cat.udl.tidic.amb.easytutor.services.AnunciService;
 import cat.udl.tidic.amb.easytutor.services.UserService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -130,9 +131,9 @@ public class AddOfferActivity extends AppCompatActivity implements
                 }
 
                 if (allRight) {
-                    UserService userService;
-                    userService = RetrofitClientInstance.
-                            getRetrofitInstance().create(UserService.class);
+                    AnunciService anunciService;
+                    anunciService = RetrofitClientInstance.
+                            getRetrofitInstance().create(AnunciService.class);
 
                     JsonObject user_json = new JsonObject();
                     user_json.addProperty("title", title);
@@ -143,7 +144,7 @@ public class AddOfferActivity extends AppCompatActivity implements
                     user_json.addProperty("distance_to_serve", distance);
                     user_json.addProperty("type", type);
 
-                    Call<Void> call = userService.registerUser(user_json);
+                    Call<Void> call = anunciService.createAnunci(user_json);
                     call.enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
